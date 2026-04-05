@@ -1,0 +1,247 @@
+#نستدعي المكاتب
+from tkinter import*
+import random 
+
+
+
+
+#والان نبدا بوضعdef لتشغيل اللعبه
+def next_turn(row,col):
+  global O
+  
+  global X
+  
+  
+  global player
+  
+  
+  if game_btuns[row][col]["text"]=="" and winner()==False:
+    if player==playes[0]:
+      #نكتب النص
+      game_btuns[row][col]["fg"]="blue"
+      game_btuns[row][col]["text"]=player
+      if winner()==False:
+        #تبديل اللاعبين
+        player=playes[1]
+        tet.config(text=(player+" turn"),fg="orange")
+      elif winner()==True:
+        tet.config(text=(player+" winner !"),fg="green")
+        window.config(bg="red")
+        tet.config(bg ="red")
+        X+=1
+        #wx.config(text=("X ={ "+str(X)+" }"),bg="red")
+      else:
+        tet.config(text="Tie ,No winner\n play again",font=("consolas",20),fg="black")
+    elif player==playes[1]:
+      #نكتب النص
+      game_btuns[row][col]["fg"]="orange"
+      game_btuns[row][col]["text"]=player
+      if winner()==False:
+        #تبديل اللاعبين
+        player=playes[0]
+        tet.config(text=(player+" turn"),fg="blue")
+      elif winner()==True:
+        tet.config(text=(player+" winner !"),fg="green")
+        window.config(bg="red")
+        tet.config(bg="red")
+        O+=1
+        #wo.config(text=("O ={ "+str(O)+" }"),bg="red")
+      else:
+        tet.config(text="Tie ,No winner\n play again",font=("consolas",20),fg="black")
+        
+
+def winner():
+  #حالات الفوز الافقيه
+  for row in range(4):
+    if game_btuns[row][0]["text"]==game_btuns[row][1]["text"]==game_btuns[row][2]["text"] !="":
+      game_btuns[row][0].config(bg="black")
+      game_btuns[row][1].config(bg="black")
+      game_btuns[row][2].config(bg="black")
+      return True
+      
+      
+      #حالات الفوز العموديه
+      
+      
+  for col in range(3):
+    if game_btuns[0][col]["text"]==game_btuns[1][col]["text"]==game_btuns[2][col]["text"] !="":
+      game_btuns[0][col].config(bg="black")
+      game_btuns[1][col].config(bg="black")
+      game_btuns[2][col].config(bg="black")
+      return True
+      
+      #حالات الفوز التي بالزوايا
+  
+  
+  for col in range(3):
+    if game_btuns[1][col]["text"]==game_btuns[2][col]["text"]==game_btuns[3][col]["text"] !="":
+      game_btuns[1][col].config(bg="black")
+      game_btuns[2][col].config(bg="black")
+      game_btuns[3][col].config(bg="black")
+      return True
+      
+      #حالات الفوز التي بالزوايا
+      
+      
+  if game_btuns[1][2]["text"]==game_btuns[2][1]["text"]==game_btuns[3][0]["text"] !="":
+    game_btuns[1][2].config(bg="black")
+    game_btuns[2][1].config(bg="black")
+    game_btuns[3][0].config(bg="black")
+    return True
+    
+    
+      
+      
+      #حالات الفوز التي بالزوايا
+      
+      
+  if game_btuns[1][0]["text"]==game_btuns[2][1]["text"]==game_btuns[3][2]["text"] !="":
+    game_btuns[1][0].config(bg="black")
+    game_btuns[2][1].config(bg="black")
+    game_btuns[3][2].config(bg="black")
+    return True
+    
+    
+      
+      
+      #حالات الفوز التي بالزوايا
+      
+      
+  if game_btuns[0][0]["text"]==game_btuns[1][1]["text"]==game_btuns[2][2]["text"] !="":
+    game_btuns[0][0].config(bg="black")
+    game_btuns[1][1].config(bg="black")
+    game_btuns[2][2].config(bg="black")
+    return True
+    
+    
+      
+      
+      #حالات الفوز التي بالزوايا
+
+
+  elif game_btuns[0][2]["text"]==game_btuns[1][1]["text"]==game_btuns[2][0]["text"] !="":
+    game_btuns[0][2].config(bg="black")
+    game_btuns[1][1].config(bg="black")
+    game_btuns[2][0].config(bg="black")
+    return True
+      
+      
+  elif check_empty_spaces()==False:
+    for row in range(4):
+      for col in range(3):
+        game_btuns[row][col].config(bg="red")
+    return "tie"
+  else:
+    return False
+    
+    
+def check_empty_spaces():
+  spaces=12
+  for row in range(4):
+    for col in range(3):
+      if game_btuns[row][col]["text"] !="":
+        spaces -=1
+  if spaces==0:
+    return False
+  else:
+    return True
+    
+    
+def start_new_game():
+  global player
+  
+  
+  player=random.choice(playes)
+  tet.config(text=(player+" turn"))
+  
+  
+  for row in range(4):
+    for col in range(3):
+      game_btuns[row][col].config(text="",bg="#F0F0F0")
+      
+      
+  window.config(bg="#F0F0F0")
+  tet.config(bg="#F0F0F0")
+  tet.config(font=("consolas",40))
+  
+  
+  # wo.config(bg="#FOFOFO")
+  # wx.config(bg="#FOFOFO")
+  
+  
+  if player==playes[0]:
+    tet.config(fg="blue")
+  elif player==playes[1] :
+    tet.config(fg="orange")
+
+
+
+
+#والان نفتح النافذه
+window=Tk()
+window.title("~~X_and_O~~")
+window.configure(bg="#F0F0F0")
+X=0
+O=0
+
+
+
+
+#نبرمج اللاعبين
+playes=["X","O"]
+player=random.choice(playes)
+
+
+
+
+#الشكل الذي يظهر على الشاشه للاكس او
+game_btuns=[
+  [0,0,0],
+  [0,0,0],
+  [0,0,0],
+  [0,0,0]
+  ]
+
+
+
+
+#النصوص والازرار التي تظهر على الشاشه
+tet =Label(text=(player+" turn"),font=("consolas",40),fg="blue",bg="#F0F0F0")
+tet.pack(side="top")
+
+
+#wo=Label(text=("O ={ "+str(O)+" }"),font=("consolas",20),fg="orange",bg="white")
+#wo.pack(side="bottom")
+
+#wx=Label(text=("X ={ "+str(X)+" }"),font=("consolas",20),fg="blue",bg="white")
+#wx.pack(side="bottom")
+
+
+if player==playes[0]:
+  tet.config(fg="blue")
+elif player==playes[1] :
+  tet.config(fg="orange")
+
+
+restart_btune=Button(text="restart",font=("consolas",20),fg="yellow",bg="black",command=start_new_game)
+restart_btune.pack(side="top")
+
+
+
+
+
+#والان نبدا بتطبيق المربعات الاكس والاو
+btune_frame=Frame(window)
+btune_frame.pack(side="top")
+
+
+for row in range(4):
+  for col in range(3):
+    game_btuns[row][col]=Button(btune_frame,text="",font=("consolas",40),bg="#F0F0F0",width=2,heigh=1,command=lambda row=row,col=col :next_turn(row,col))
+    game_btuns[row][col].grid(row=row,column=col)
+
+
+
+
+
+window.mainloop()
